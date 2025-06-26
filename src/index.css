@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-ss: 30rem;
+  --breakpoint-xs: 35rem;
+}
+@font-face {
+  font-family: 'Aeonik';
+  src: url('./assets/Aeonik\ TRIAL.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Aeonik', sans-serif;
+  background-color: #F8F8F8;
+}
