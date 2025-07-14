@@ -100,9 +100,12 @@ export default function VideoCompareCard() {
       className="absolute top-0 bottom-0 w-1.5 bg-[#1D1F20] z-10"
       style={{ left: `${sliderX}%`, transform: "translateX(-50%)" }}
     >
-      <div className="absolute top-1/2 left-1/2 w-16 h-16 max-sm:w-14 max-sm:h-13 bg-[#1D1F20] rounded-full border border-[#D2D0C9] shadow flex items-center justify-center gap-1 -translate-x-1/2 -translate-y-1/2">
-        <PlayArrowIcon className="play-arrow-icon rotate-180 text-[#D2D0C9]" />
-        <PlayArrowIcon className="play-arrow-icon text-[#D2D0C9]" />
+      <div className="absolute top-1/2 left-1/2 w-16 h-16 max-sm:w-10 max-sm:h-10 bg-[#1D1F20] rounded-full border border-[#D2D0C9] shadow flex items-center justify-center gap-1 -translate-x-1/2 -translate-y-1/2">
+        {/* Change font size */}
+
+        <PlayArrowIcon className="play-arrow-icon rotate-180 text-[#D2D0C9]"  fontSize="1px"/>
+        <PlayArrowIcon className="play-arrow-icon text-[#D2D0C9]"  fontSize="1px" />
+
       </div>
     </div>
   );

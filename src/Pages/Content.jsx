@@ -20,7 +20,7 @@ export default function Content({ projectData }) {
                     <img
                       src={image}
                       alt={`Latest Work ${index + 1}`}
-                      className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:scale-105"
+                      className=" max-w-80 xs:w-full  h-auto object-cover rounded-xl transition-transform duration-300 group-hover:scale-105"
                     />
                     <a
                       href={projectData.Urls[index]}

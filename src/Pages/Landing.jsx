@@ -43,9 +43,10 @@ function Landing() {
           {/* Big Name */}
           <h1
             className="
-            text-[85px]
-              ss:text-[100px] xs:text-[120px]  sm:text-[150px] md:text-[200px] lg:text-[300px]
+            text-[80px]
+              ss:text-[100px] xs:text-[120px]  sm:text-[150px] md:text-[160px] lg:text-[220px] xl:text-[270px]
               text-center md:text-left leading-none font-light mb-4
+              mt-2
               break-words
             "
           >

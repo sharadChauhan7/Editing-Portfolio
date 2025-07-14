@@ -23,7 +23,7 @@ function Aboutus() {
         {/* Right Grid Content */}
         <div className="w-full lg:w-3/5 grid grid-cols-1 sm:grid-cols-2 max-sm:gap-15 gap-6">
           {/* Stat Card */}
-          <div className="bg-[#181B1C] text-[#BBB4A9] rounded-2xl shadow-sm p-5 flex flex-col items-start text-left space-y-4">
+          <div className="bg-[#181B1C] text-[#BBB4A9] rounded-2xl shadow-sm p-5 mx-5 flex flex-col items-start text-left space-y-4">
             {/* <img
               src={World}
               alt="Client"
