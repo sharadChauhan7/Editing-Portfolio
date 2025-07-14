@@ -4,10 +4,10 @@ import YouTubeEmbed from '../components/YouTubeEmbed'
 export default function Content({ projectData }) {
   const reelUrl = "https://www.instagram.com/reel/C59LqDuSTaa/";
   return (
-    <section id="portfolio" className="bg-[#f5f5f5] px-4 py-16 text-black font-[Aeonik]">
+    <section id="portfolio" className=" px-4 py-16 bg-[#1C1F20] text-[#D3D0C9] font-[Aeonik]">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-center mb-4">
-          <span className="bg-black text-white text-sm px-4 py-1 rounded-full">Portfolio</span>
+          {/* <span className="bg-black text-white text-sm px-4 py-1 rounded-full">Portfolio</span> */}
         </div>
         <h2 className="text-center text-4xl font-semibold mb-12">{projectData.title}</h2>
 
@@ -33,9 +33,9 @@ export default function Content({ projectData }) {
                   </> : <YouTubeEmbed videoId={projectData.videoIds[index]} />}
 
                 </div>
-                <div className="mt-4 text-sm text-black">
+                <div className="mt-4 text-base text-[#D3D0C9]">
                   <p className="font-medium">{projectData.Titles[index]}</p>
-                  <p className="text-xs text-gray-500 mt-1">{projectData.Subtitles[index]}</p>
+                  <p className="text-sm text-[#A39A8D] mt-1">{projectData.Subtitles[index]}</p>
                 </div>
 
               </div>

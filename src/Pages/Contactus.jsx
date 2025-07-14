@@ -41,7 +41,7 @@ function ContactUs() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#F8F8F8] text-[#222222] flex flex-col">
+    <div className="min-h-screen w-full bg-[#1C1F20] text-[#D3D0C9] flex flex-col">
       {/* Top Nav */}
       <div className="flex justify-between items-center px-6 md:px-16 py-6">
         <div className="text-xl font-bold">
@@ -69,7 +69,7 @@ function ContactUs() {
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light mb-4">
             Let's Connect
           </h1>
-          <p className="text-[#7B7B7B] text-lg mb-10 max-w-md text-center md:text-left">
+          <p className="text-[#BBB4A9] text-lg mb-10 max-w-md text-center md:text-left">
             Have an idea or a project? Let's work together and create something amazing.
           </p>
 
@@ -99,7 +99,7 @@ function ContactUs() {
               value={form.name}
               onChange={handleChange}
               placeholder="Your Name"
-              className="bg-transparent border-b border-[#222222] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2"
+              className="bg-transparent border-b border-[#BBB4A9] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2"
             />
             {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
             <input
@@ -108,7 +108,7 @@ function ContactUs() {
               value={form.email}
               onChange={handleChange}
               placeholder="Your Email"
-              className="bg-transparent border-b border-[#222222] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2"
+              className="bg-transparent border-b border-[#BBB4A9] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2"
             />
             {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
             <input
@@ -117,7 +117,7 @@ function ContactUs() {
               value={form.length}
               onChange={handleChange}
               placeholder="Length of the video"
-              className="bg-transparent border-b border-[#222222] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2"
+              className="bg-transparent border-b border-[#BBB4A9] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2"
             />
             {errors.length && <span className="text-red-500 text-xs">{errors.length}</span>}
             <textarea
@@ -125,13 +125,13 @@ function ContactUs() {
               value={form.message}
               onChange={handleChange}
               placeholder="Your Message"
-              className="bg-transparent border-b border-[#222222] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2 resize-none"
+              className="bg-transparent border-b border-[#BBB4A9]  placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2 resize-none"
               rows="4"
             />
             {errors.message && <span className="text-red-500 text-xs">{errors.message}</span>}
             <button
               type="submit"
-              className="border border-[#222222] py-2 px-4 text-base hover:bg-[#222222] hover:text-[#F8F8F8] transition-colors"
+              className="border border-[#BBB4A9] py-2 px-4 text-base hover:bg-[#222222] hover:text-[#F8F8F8] transition-colors"
             >
               Send Message ↗
             </button>

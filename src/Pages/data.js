@@ -16,9 +16,9 @@ export const aboutUsData = {
 export const projectData = {
     title:"Latest Work",
     Images:["","","","","",""],
-    Titles:['N8N','Typography Need','Almost Burned Out','First Edit','Match Cut','Apple\'s WWDC25'],
-    Subtitles:['N8N is a Powerful Workflow Automation Software & Tools ','Why we need to Typography','Do I look funny or dumb, right?','Pilot',"Match cut Tutorial",'Apple\'s WWDC25 i kinda like the design',],
-    videoIds:['jeF0uNrkq-Y','E10mjtxvCK8','Mvi4cdzaM34','vJFN27c-3Lw','3JhzmOIwQ1s','9k0Bot0dqhY']
+    Titles:['UGC Add','Edited For @ChrisWillx','Almost Burned Out','Typography','N8N','Apple\'s WWDC25'],
+    Subtitles:['Edited for ThumbStoppers ','@ChrisWillx','I look dumb, right?','Why we need Typography',"N8N is a Powerful Workflow Automation Software & Tools",'Apple\'s WWDC25, I kinda like the design',],
+    videoIds:['-5RkKQUHzJ0','Zfi33anSaJI','Mvi4cdzaM34','E10mjtxvCK8','jeF0uNrkq-Y','9k0Bot0dqhY']
 }
 export const trendingData = {
     title:"Viral Work",
