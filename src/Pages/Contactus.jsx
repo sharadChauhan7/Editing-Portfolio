@@ -141,7 +141,7 @@ function ContactUs() {
 
       {/* Left Bottom Year (Rotated) */}
       <div className="fixed left-2 bottom-10 text-[#7B7B7B] text-sm rotate-[-90deg] hidden md:block">
-        2024
+        2025
       </div>
     </div>
   )

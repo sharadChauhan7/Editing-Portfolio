@@ -11,8 +11,8 @@ import EditingCompareCard from '../components/EditingCompareCard.jsx'
 function Home() {
   return (
     <> 
-      <div className='bg-[#1C1F20] text-[#D3D0C9]'>
-
+      <div className=' text-[#D3D0C9] relative w-full bg-[#1C1F20] overflow-hidden'>
+    
       <Landing />
       <EditingCompareCard/>
       <VideoCompareCard/>
