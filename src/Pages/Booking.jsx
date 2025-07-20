@@ -3,10 +3,10 @@ import { motion } from 'framer-motion'
 
 function Booking() {
   return (
-    <section className="relative bg-[#1C1F20] text-[#D3D0C9] px-6 md:px-16 py-28 max-sm:py-14 overflow-hidden z-10">
+    <section className="relative px-6 md:px-16 py-28 max-sm:py-14 overflow-hidden z-10">
       {/* 🟣 Floating particles */}
       <div className="absolute inset-0 -z-10 pointer-events-none ">
-        <div className="w-full h-full animate-pulse-slow  bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.03),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.02),transparent_40%)]" />
+        {/* <div className="w-full h-full animate-pulse-slow  bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.03),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.02),transparent_40%)]" /> */}
       </div>
 
       {/* 🔮 Main Card with animated shimmer */}

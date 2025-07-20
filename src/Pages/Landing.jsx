@@ -37,7 +37,7 @@ function Landing() {
       >
         <div className="text-xl mx-4 font-bold">
           <a href="/">
-            <img src={Logo} alt="Logo" className="h-10 w-auto" />
+            <img src={Logo} alt="Logo" className="h-10 w-auto rounded-full" />
           </a>
         </div>
 

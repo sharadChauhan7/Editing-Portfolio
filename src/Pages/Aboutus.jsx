@@ -23,104 +23,93 @@ const fadeUp = {
 
 function Aboutus() {
   return (
-    <section id="about" className="px-4 sm:px-6 md:px-10 lg:px-16 py-20 bg-[#1C1F20] text-[#D3D0C9]">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-        {/* Left Text Block */}
+    <section id="about" className="px-4 sm:px-6 md:px-10 lg:px-16 py-20">
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          className="w-full lg:w-2/5 space-y-6 text-center lg:text-left"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
           variants={fadeUp}
+          className="backdrop-blur-xl bg-white/5  rounded-3xl px-6 sm:px-10 py-12 md:py-16 lg:py-20  border border-white/10 shadow-[0_0_60px_rgba(255,255,255,0.07)]"
         >
-          <motion.h2 variants={fadeUp} custom={1} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light">
-            About Me
-          </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-[#BBB4A9] text-sm sm:text-base md:text-lg px-2 lg:px-0">
-            {aboutUsData.description}
-          </motion.p>
-          <motion.img
-            variants={fadeUp}
-            custom={3}
-            src={Arrow}
-            alt="Arrow"
-            className="w-32 sm:w-48 md:w-60 lg:w-72 xl:w-80 mx-auto lg:mx-0 mt-4"
-          />
-        </motion.div>
-
-        {/* Right Grid Content */}
-        <div className="w-full lg:w-3/5 grid grid-cols-1 sm:grid-cols-2 max-sm:gap-15 gap-6">
-          {/* Stat Card */}
-          <motion.div
-            variants={fadeUp}
-            custom={1}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="bg-[#181B1C] text-[#BBB4A9] rounded-2xl shadow-sm p-5 mx-5 flex flex-col items-start text-left space-y-4"
-          >
-            <img src={Logo} alt="Logo" className="w-20 sm:w-24 h-20 sm:h-24 object-cover rounded-full" />
-            <h3 className="text-4xl sm:text-5xl font-light">{aboutUsData.videosEdited}+</h3>
-            <p className="text-sm">Video edited</p>
-            <p className="text-sm sm:text-base">{aboutUsData.oneLiner}</p>
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Left: Text Block */}
             <motion.div
+              className="w-full lg:w-2/5 space-y-6 text-center lg:text-left "
               variants={fadeUp}
-              custom={2}
-              className="w-full"
+              custom={1}
             >
-              <img
-                src={Editing}
-                alt="Editing"
-                className="w-full h-full object-cover rounded-xl"
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">About Me</h2>
+              <p className="text-[#BBB4A9] text-sm sm:text-base md:text-lg">
+                {aboutUsData.description}
+              </p>
+              <motion.img
+                variants={fadeUp}
+                custom={2}
+                src={Arrow}
+                alt="Arrow"
+                className="w-40 sm:w-52 mx-auto lg:mx-0 mt-4"
               />
             </motion.div>
-          </motion.div>
 
-          {/* Profile Popup + Info Points */}
-          <motion.div
-            className="flex flex-col gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            {/* Profile Popup */}
-            <motion.div variants={fadeUp} custom={1} className="flex justify-center">
-              <div className="relative group flex justify-center items-center w-full">
-                <img
-                  src={Profile}
-                  alt="Popup Face"
-                  className="rounded-xl h-full ml-5 w-[160px] md:w-[180px] lg:w-[200px] object-cover"
-                />
-                <div className="absolute inset-0 bg-black/30 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                  <div className="bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl">
+            {/* Right: Content Grid */}
+            <div className="w-full lg:w-3/5 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Stat Card */}
+              <motion.div
+                variants={fadeUp}
+                custom={2}
+                className="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-4"
+              >
+                <img src={Logo} alt="Logo" className="w-20 h-20 object-cover rounded-full" />
+                <h3 className="text-4xl sm:text-5xl font-light text-white">{aboutUsData.videosEdited}+</h3>
+                <p className="text-sm text-[#BBB4A9]">Videos Edited</p>
+                <p className="text-sm sm:text-base text-[#BBB4A9]">{aboutUsData.oneLiner}</p>
+                <img src={Editing} alt="Editing" className="w-full h-40 object-cover rounded-xl" />
+              </motion.div>
+
+              {/* Profile and Highlights */}
+              <motion.div
+                variants={fadeUp}
+                custom={3}
+                className="flex flex-col gap-6"
+              >
+                {/* Profile Popup */}
+                <div className="relative group mx-auto">
+                  <img
+                    src={Profile}
+                    alt="Profile"
+                    className="rounded-xl w-[180px] h-[220px] object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/30 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                     <a
                       href="https://www.instagram.com/sharad.s.chauhan/reels"
                       target="_blank"
                       rel="noopener noreferrer"
-                    >↗</a>
+                      className="bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl"
+                    >
+                      ↗
+                    </a>
                   </div>
                 </div>
-              </div>
-            </motion.div>
 
-            {/* Info Points */}
-            <div className="space-y-6">
-              <motion.div variants={fadeUp} custom={2} className="flex items-start gap-4">
-                <img src={Star} alt="Client" className="w-10 sm:w-12 h-10 sm:h-12 object-cover rounded-lg" />
-                <p className="text-[#BBB4A9] text-sm sm:text-base leading-relaxed">
-                  {aboutUsData.point1}
-                </p>
-              </motion.div>
-              <motion.div variants={fadeUp} custom={3} className="flex items-start gap-4">
-                <img src={Star} alt="Client" className="w-10 sm:w-12 h-10 sm:h-12 object-cover rounded-lg" />
-                <p className="text-[#BBB4A9] text-sm sm:text-base leading-relaxed">
-                  {aboutUsData.point2}
-                </p>
+                {/* Info Points */}
+                <div className="space-y-6">
+                  {[aboutUsData.point1, aboutUsData.point2].map((point, idx) => (
+                    <motion.div
+                      key={idx}
+                      variants={fadeUp}
+                      custom={idx + 4}
+                      className="flex items-start gap-4"
+                    >
+                      <img src={Star} alt="Point" className="w-10 h-10 object-cover rounded-lg" />
+                      <p className="text-[#BBB4A9] text-sm sm:text-base leading-relaxed">{point}</p>
+                    </motion.div>
+                  ))}
+                </div>
               </motion.div>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
