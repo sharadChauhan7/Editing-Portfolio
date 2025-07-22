@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { landingPageData } from './data.js'
 import Logo from '../assets/logo.png'
 import { motion } from 'framer-motion'
@@ -17,29 +17,29 @@ const fadeInVariants = {
 }
 
 function Landing() {
+  const navAnimation = useMemo(() => ({
+    initial: 'hidden',
+    whileInView: 'visible',
+    viewport: { once: true },
+    variants: fadeInVariants,
+  }), [])
+
   return (
     <section className="relative min-h-screen w-full text-[#D3D0C9] flex flex-col items-center overflow-hidden bg-[#1C1F20]">
-      {/* Background Glass & Particles */}
+      {/* 🔴 GPU-heavy Glass Effects - Consider disabling on mobile */}
       <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none overflow-hidden">
+        {/* Consider combining these or reducing opacity/blur on small devices */}
         <div className="absolute w-96 h-96 bg-pink-500 opacity-10 rounded-full blur-[150px] top-[-50px] left-[-50px] animate-pulse"></div>
         <div className="absolute w-80 h-80 bg-purple-500 opacity-10 rounded-full blur-[120px] bottom-[10%] right-[10%] animate-pulse"></div>
         <div className="absolute w-72 h-72 bg-blue-500 opacity-10 rounded-full blur-[100px] top-[30%] left-[30%] animate-pulse"></div>
         <div className="absolute inset-0 bg-white/5 backdrop-blur-2xl animate-pulse opacity-10"></div>
       </div>
 
-      {/* Top Nav */}
-      <motion.div
-        className="relative z-10 flex justify-between items-center px-6 md:px-16 py-6 w-full"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeInVariants}
-      >
-        <div className="text-xl mx-4 font-bold">
-          <a href="/">
-            <img src={Logo} alt="Logo" className="h-10 w-auto rounded-full" />
-          </a>
-        </div>
+      {/* 🔹 Nav */}
+      <motion.div className="relative z-10 flex justify-between items-center px-6 md:px-16 py-6 w-full" {...navAnimation}>
+        <a href="/" className="text-xl mx-4 font-bold">
+          <img src={Logo} alt="Logo" loading="lazy" className="h-10 w-auto rounded-full" />
+        </a>
 
         <div className="hidden md:flex space-x-10 text-base">
           <a href="#about" className="hover:underline">About Me</a>
@@ -51,9 +51,8 @@ function Landing() {
         </div>
       </motion.div>
 
-      {/* Content */}
+      {/* 🔹 Main Content */}
       <div className="relative z-10 flex-grow flex flex-col items-start justify-center px-6 md:px-16 w-full max-w-screen-xl">
-        {/* Vertical Text */}
         <motion.div
           className="hidden md:block text-sm text-[#A39A8D] rotate-[-90deg] absolute left-2 top-1/4 origin-left"
           initial={{ opacity: 0, x: -50 }}
@@ -64,14 +63,7 @@ function Landing() {
           Video Editor
         </motion.div>
 
-        {/* Main Content */}
-        <motion.div
-          className="flex flex-col items-start justify-center w-full"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInVariants}
-        >
+        <motion.div className="flex flex-col items-start justify-center w-full" {...navAnimation}>
           <motion.div variants={fadeInVariants} custom={1} className="flex items-end justify-start w-full">
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light">Hi, I am</h1>
           </motion.div>
@@ -84,11 +76,7 @@ function Landing() {
             SHARAD
           </motion.h1>
 
-          <motion.p
-            variants={fadeInVariants}
-            custom={3}
-            className="text-[#A39A8D] text-lg text-center md:text-left mb-8"
-          >
+          <motion.p variants={fadeInVariants} custom={3} className="text-[#A39A8D] text-lg text-center md:text-left mb-8">
             — The editing wizard
           </motion.p>
 
@@ -98,30 +86,22 @@ function Landing() {
             className="flex gap-2 flex-row sm:space-x-10 space-y-4 sm:space-y-0 mb-10 text-center sm:text-left"
           >
             <div>
-              <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extralight">
-                {landingPageData.followerCount}+
-              </h3>
+              <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extralight">{landingPageData.followerCount}+</h3>
               <p className="text-[#A39A8D] text-sm">Instagram Follower</p>
             </div>
             <div>
-              <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extralight">
-                {landingPageData.views}k+
-              </h3>
+              <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extralight">{landingPageData.views}k+</h3>
               <p className="text-[#A39A8D] text-sm">Video views</p>
             </div>
           </motion.div>
 
-          <motion.div
-            variants={fadeInVariants}
-            custom={5}
-            className="mt-6 sm:mt-12 text-base text-[#A39A8D]"
-          >
+          <motion.div variants={fadeInVariants} custom={5} className="mt-6 sm:mt-12 text-base text-[#A39A8D]">
             Scroll down ↓
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Left Bottom Year (Rotated) */}
+      {/* 🔹 Year (Fixed) */}
       <motion.div
         className="fixed left-2 bottom-10 text-[#A39A8D] text-sm rotate-[-90deg] hidden md:block z-10"
         initial={{ opacity: 0, y: 20 }}
@@ -132,7 +112,7 @@ function Landing() {
         2025
       </motion.div>
 
-      {/* Glow text class */}
+      {/* ✨ Glow Class */}
       <style jsx>{`
         .glow-text {
           text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);

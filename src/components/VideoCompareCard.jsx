@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import withColorImage from "../assets/WithColor.jpg";
 import withoutColorImage from "../assets/WithoutColor.jpg";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 
 const WITH_COLOR_URL =
   "https://res.cloudinary.com/dwlxbcctg/video/upload/q_auto,f_auto/Editing_Portfolio/iwilzyh7iexvprtwrosm";
@@ -14,18 +14,16 @@ export default function VideoCompareCard() {
   const beforeRef = useRef(null);
   const afterRef = useRef(null);
 
+  const isInView = useInView(containerRef, { once: true, margin: "0px 0px -200px 0px" });
   const [sliderX, setSliderX] = useState(50);
   const [videosLoaded, setVideosLoaded] = useState(false);
 
   useEffect(() => {
-    const id = setTimeout(() => setVideosLoaded(true), 7000);
-    return () => clearTimeout(id);
-  }, []);
+    if (!isInView) return;
 
-  useEffect(() => {
     let loaded = 0;
     const onReady = () => {
-      loaded += 1;
+      loaded++;
       if (loaded === 2) setVideosLoaded(true);
     };
 
@@ -38,20 +36,20 @@ export default function VideoCompareCard() {
       before?.removeEventListener("canplaythrough", onReady);
       after?.removeEventListener("canplaythrough", onReady);
     };
-  }, []);
+  }, [isInView]);
 
   useEffect(() => {
-    if (videosLoaded) {
-      const before = beforeRef.current;
-      const after = afterRef.current;
+    if (!videosLoaded) return;
 
-      if (before && after) {
-        const syncTime = Math.max(before.currentTime, after.currentTime);
-        before.currentTime = syncTime;
-        after.currentTime = syncTime;
-        before.play();
-        after.play();
-      }
+    const before = beforeRef.current;
+    const after = afterRef.current;
+
+    if (before && after) {
+      const syncTime = Math.max(before.currentTime, after.currentTime);
+      before.currentTime = syncTime;
+      after.currentTime = syncTime;
+      before.play();
+      after.play();
     }
   }, [videosLoaded]);
 
@@ -61,9 +59,10 @@ export default function VideoCompareCard() {
     setSliderX(Math.max(0, Math.min(100, pct)));
   };
 
+  const handleDrag = (clientX) => updateSlider(clientX);
   const handleMouseDown = (e) => {
-    updateSlider(e.clientX);
-    const move = (e) => updateSlider(e.clientX);
+    handleDrag(e.clientX);
+    const move = (e) => handleDrag(e.clientX);
     const up = () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseup", up);
@@ -73,8 +72,8 @@ export default function VideoCompareCard() {
   };
 
   const handleTouchStart = (e) => {
-    updateSlider(e.touches[0].clientX);
-    const move = (e) => updateSlider(e.touches[0].clientX);
+    handleDrag(e.touches[0].clientX);
+    const move = (e) => handleDrag(e.touches[0].clientX);
     const end = () => {
       window.removeEventListener("touchmove", move);
       window.removeEventListener("touchend", end);
@@ -84,7 +83,7 @@ export default function VideoCompareCard() {
   };
 
   const Handle = (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: -10 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
@@ -96,90 +95,93 @@ export default function VideoCompareCard() {
         <PlayArrowIcon className="rotate-180 text-[#D2D0C9]" fontSize="1px" />
         <PlayArrowIcon className="text-[#D2D0C9]" fontSize="1px" />
       </div>
-    </motion.div>
+    </m.div>
   );
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ once: true }}
-      className="w-full max-w-6xl mx-auto my-20 px-6 font-[Aeonik]"
-    >
-      {/* Heading */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
+    <LazyMotion features={domAnimation}>
+      <m.section
+        initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="text-center text-6xl max-md:text-4xl font-semibold mb-12"
+        className="w-full max-w-6xl mx-auto my-20 px-6 font-[Aeonik]"
       >
-        Color Grading
-      </motion.h2>
-
-      {/* Video Comparison Container */}
-      <motion.div
-        ref={containerRef}
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        viewport={{ once: true }}
-        className="relative w-full aspect-video overflow-hidden rounded-xl group cursor-ew-resize border border-white/10 shadow-[0_0_60px_rgba(255,255,255,0.07)]"
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
-      >
-        {/* Image fallback while loading */}
-        {!videosLoaded && (
-          <>
-            <img
-              src={withColorImage}
-              alt="With Color"
-              className="absolute top-0 left-0 w-full h-full object-cover z-0"
-            />
-            <img
-              src={withoutColorImage}
-              alt="Without Color"
-              className="absolute top-0 left-0 w-full h-full object-cover z-10"
-              style={{ clipPath: `inset(0 ${100 - sliderX}% 0 0)` }}
-            />
-            {Handle}
-          </>
-        )}
-
-        {/* Videos */}
-        <div
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ${
-            videosLoaded ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
+        {/* Heading */}
+        <m.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          viewport={{ once: true }}
+          className="text-center text-6xl max-md:text-4xl font-semibold mb-12"
         >
-          {/* After (with color) */}
-          <video
-            ref={afterRef}
-            src={WITH_COLOR_URL}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
+          Color Grading
+        </m.h2>
 
-          {/* Before (without color) */}
-          <video
-            ref={beforeRef}
-            src={WITHOUT_COLOR_URL}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            style={{ clipPath: `inset(0 ${100 - sliderX}% 0 0)` }}
-          />
-          {Handle}
-        </div>
-      </motion.div>
-    </motion.section>
+        {/* Container */}
+        <m.div
+          ref={containerRef}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="relative w-full aspect-video overflow-hidden rounded-xl group cursor-ew-resize border border-white/10 shadow-[0_0_60px_rgba(255,255,255,0.07)]"
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+        >
+          {/* ⏳ Image fallback */}
+          {!videosLoaded && (
+            <>
+              <img
+                src={withColorImage}
+                alt="With Color"
+                className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                loading="lazy"
+              />
+              <img
+                src={withoutColorImage}
+                alt="Without Color"
+                className="absolute top-0 left-0 w-full h-full object-cover z-10"
+                style={{ clipPath: `inset(0 ${100 - sliderX}% 0 0)` }}
+              />
+            </>
+          )}
+
+          {/* 🎥 Videos */}
+          {isInView && (
+            <div
+              className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ${
+                videosLoaded ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <video
+                ref={afterRef}
+                src={WITH_COLOR_URL}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="absolute top-0 left-0 w-full h-full object-cover"
+              />
+              <video
+                ref={beforeRef}
+                src={WITHOUT_COLOR_URL}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="absolute top-0 left-0 w-full h-full object-cover"
+                style={{ clipPath: `inset(0 ${100 - sliderX}% 0 0)` }}
+              />
+            </div>
+          )}
+
+          {/* Handle */}
+          {videosLoaded && Handle}
+        </m.div>
+      </m.section>
+    </LazyMotion>
   );
 }
