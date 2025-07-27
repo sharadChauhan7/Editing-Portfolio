@@ -3,20 +3,21 @@ import React, { useState, useCallback, useMemo } from 'react'
 import Logo from '../assets/logo.png'
 import { motion } from 'framer-motion'
 import Joi from 'joi'
+import { useNavigate } from 'react-router-dom'
 
 // Move schema and labels out of render
 const schema = Joi.object({
   name: Joi.string().min(2).max(50).required().label('Your Name'),
   email: Joi.string().email({ tlds: { allow: false } }).required().label('Your Email'),
-  length: Joi.string().min(1).max(30).required().label('Length of the video'),
-  message: Joi.string().min(5).max(1000).required().label('Your Message'),
+  videoLength: Joi.string().min(1).max(30).required().label('Length of the video'),
+  videoInfo: Joi.string().min(5).max(1000).required().label('Your Message'),
 })
 
 const labels = {
   name: 'Your Name',
   email: 'Your Email',
-  length: 'Length of the video',
-  message: 'Your Message',
+  videoLength: 'Length of the video',
+  videoInfo: 'Your Message',
 }
 
 // Animation variants
@@ -33,38 +34,66 @@ const fadeInVariants = {
   }),
 }
 
+
 // Input Field
 const InputField = React.memo(({ name, type = 'text', value, onChange, placeholder, error }) => {
-  const inputClass = 'w-full bg-transparent border-b border-[#BBB4A9] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2'
-  return (
-    <div>
-      {name === 'message' ? (
+  const inputClass =
+    'w-full bg-transparent border-b border-[#BBB4A9] placeholder:text-[#7B7B7B] text-lg focus:outline-none py-2';
+
+  // Check if the field is the long message field
+  if (name === 'videoInfo') {
+    return (
+      <div>
         <textarea
           name={name}
           value={value}
-          onChange={onChange}
+          onChange={(e) => {
+            // Word limit check (200 words)
+            const words = e.target.value.trim().split(/\s+/);
+            if (words.length <= 200) {
+              onChange(e);
+            }
+          }}
           placeholder={placeholder}
-          className={`${inputClass} resize-none`}
-          rows="4"
+          rows={5}
+          className={`${inputClass} resize-y min-h-[120px] max-h-[400px]`}
+          onKeyDown={(e) => {
+            // Prevent form submit on Enter
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.stopPropagation();
+            }
+          }}
         />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          className={inputClass}
-        />
-      )}
+        <div className="text-xs text-right text-gray-400 mt-1">
+          {value.trim() ? value.trim().split(/\s+/).length : 0}/200 words
+        </div>
+        {error && <span className="text-red-500 text-xs">{error}</span>}
+      </div>
+    );
+  }
+
+  // Normal input for other fields
+  return (
+    <div>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={inputClass}
+      />
       {error && <span className="text-red-500 text-xs">{error}</span>}
     </div>
-  )
-})
+  );
+});
+
 
 function ContactUs() {
-  const [form, setForm] = useState({ name: '', email: '', length: '', message: '' })
+  const navigate = useNavigate()
+  const [form, setForm] = useState({ name: '', email: '', videoLength: '', videoInfo: '' })
   const [errors, setErrors] = useState({})
+  const [loading, setLoading] = useState(false)
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target
@@ -72,8 +101,9 @@ function ContactUs() {
     setErrors((prev) => ({ ...prev, [name]: undefined }))
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     const { error } = schema.validate(form, { abortEarly: false })
     if (error) {
       const errObj = {}
@@ -83,9 +113,22 @@ function ContactUs() {
       setErrors(errObj)
       return
     }
-    alert('Still working on the form, please contact the owner manually!')
-    setForm({ name: '', email: '', length: '', message: '' })
-    setErrors({})
+
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbyyqrNkq8BK7UBhcrphsgHbuoF1hv_O55MbobiBMdNLyY1g1uQw3aZKde11XjQR_fjt/exec", {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+
+      alert("✅ Your request has been sent we will get back to you soon!");
+    } catch (error) {
+      alert("❌ Failed to send message. Try again after some time or if it's urgent, contact me via email or phone.");
+    }
+    setForm({ name: '', email: '', videoLength: '', videoInfo: '' })
+    setErrors({});
+    setLoading(false)
+    navigate('/', { replace: true });
+
   }
 
   const animationProps = useMemo(() => ({
@@ -160,13 +203,24 @@ function ContactUs() {
               error={errors[field]}
             />
           ))}
-          <motion.button
+           <motion.button
             type="submit"
             variants={fadeInVariants}
             custom={5}
-            className="border border-[#BBB4A9] py-2 px-4 text-base hover:bg-[#222222] hover:text-white transition-colors"
+            className={`border border-[#BBB4A9] py-2 px-4 text-base hover:bg-[#222222] hover:text-white transition-colors flex items-center justify-center`}
+            disabled={loading}
           >
-            Send Message ↗
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+                </svg>
+                Sending...
+              </span>
+            ) : (
+              'Send Message'
+            )}
           </motion.button>
         </motion.form>
       </div>
